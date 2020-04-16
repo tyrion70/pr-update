@@ -23,7 +23,7 @@ jobs:
     - run: echo $COMMITTED_AT
       env:
         COMMITTED_AT: ${{ steps.author-date.outputs.result }}
-    - uses: tyrion70/stale@master
+    - uses: tyrion70/stale@peter
       with:
         ACTIONS_STEP_DEBUG: true
         repo-token: ${{ secrets.GITHUB_TOKEN }}
