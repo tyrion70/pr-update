@@ -24,8 +24,6 @@ jobs:
       env:
         COMMITTED_AT: ${{ steps.author-date.outputs.result }}
     - uses: tyrion70/stale@peter
-      env:
-        ACTIONS_STEP_DEBUG: true
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         commitdate: ${{ steps.author-date.outputs.result }}
