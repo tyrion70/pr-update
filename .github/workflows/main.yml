@@ -1,0 +1,31 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/github-script@0.3.0
+      id: author-date
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |             
+          const commit_details = await github.git.getCommit({owner: context.repo.owner, repo: context.repo.repo, commit_sha: context.sha});
+          return commit_details.data.author.date
+    - run: echo $COMMITTED_AT
+      env:
+        COMMITTED_AT: ${{ steps.author-date.outputs.result }}
+    - uses: actions/stale@v1.1.0
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        commitdate: ${{ steps.author-date.outputs.result }}
+        stale-pr-message: 'Message to comment on stale PRs. If none provided, will not mark PRs stale'
+
