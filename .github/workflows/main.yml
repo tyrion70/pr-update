@@ -23,8 +23,9 @@ jobs:
     - run: echo $COMMITTED_AT
       env:
         COMMITTED_AT: ${{ steps.author-date.outputs.result }}
-    - uses: tyrion70/stale@v1.1.0
+    - uses: tyrion70/stale@master
       with:
+        ACTIONS_STEP_DEBUG: true
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         commitdate: ${{ steps.author-date.outputs.result }}
         stale-pr-message: 'Message to comment on stale PRs. If none provided, will not mark PRs stale'
